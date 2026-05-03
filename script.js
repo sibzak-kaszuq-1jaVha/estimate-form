@@ -134,18 +134,12 @@ const inquiryBody = document.getElementById("inquiryBody");
 const copyButton = document.getElementById("copyButton");
 const copyStatus = document.getElementById("copyStatus");
 const googleFormLink = document.getElementById("googleFormLink");
-<<<<<<< HEAD
-=======
 const confirmWarning = document.getElementById("confirmWarning");
->>>>>>> 5349785 (Update estimate form)
 const requestLevel2Label = document.getElementById("requestLevel2Label");
 const requestLevel3Label = document.getElementById("requestLevel3Label");
 const requestLevel4Label = document.getElementById("requestLevel4Label");
 const requestLevel5Label = document.getElementById("requestLevel5Label");
-<<<<<<< HEAD
-=======
 const freeMemo = document.getElementById("freeMemo");
->>>>>>> 5349785 (Update estimate form)
 
 const LEVEL_LABELS_BY_CATEGORY = {
   bg_illust: ["描き込み重視", "サイズ、範囲", "追加詳細", "最終詳細"],
@@ -374,8 +368,6 @@ function getCheckedConfirmations() {
   return items;
 }
 
-<<<<<<< HEAD
-=======
 function allConfirmationsChecked() {
   return (
     document.getElementById("confirmNoAiUse").checked &&
@@ -385,7 +377,6 @@ function allConfirmationsChecked() {
   );
 }
 
->>>>>>> 5349785 (Update estimate form)
 function renderBreakdown(lines) {
   breakdownList.textContent = "";
   lines.forEach((item) => {
@@ -399,29 +390,20 @@ function updateAll() {
   updateLevelLabels();
   const estimate = buildEstimate();
   const confirmations = getCheckedConfirmations();
-<<<<<<< HEAD
-  estimateTotal.textContent = yen(estimate.total);
-  estimateDelivery.textContent = `概算納期: ${estimate.weeks ? weeksToLabel(estimate.weeks) : "-"}`;
-  renderBreakdown(estimate.lines);
-=======
   const canOpenGoogleForm = allConfirmationsChecked();
   estimateTotal.textContent = yen(estimate.total);
   estimateDelivery.textContent = `概算納期: ${estimate.weeks ? weeksToLabel(estimate.weeks) : "-"}`;
   renderBreakdown(estimate.lines);
   googleFormLink.classList.toggle("hidden", !canOpenGoogleForm);
   confirmWarning.classList.toggle("hidden", canOpenGoogleForm);
->>>>>>> 5349785 (Update estimate form)
   inquiryBody.value = [
     "【概算内容】",
     "",
     ...estimate.lines.map((line) => `- ${line.label}: ${line.value}`),
     "",
-<<<<<<< HEAD
-=======
     "【自由記述】",
     freeMemo.value.trim() || "なし",
     "",
->>>>>>> 5349785 (Update estimate form)
     "【確認済み項目】",
     ...(confirmations.length ? confirmations.map((item) => `- ${item}`) : ["- なし"]),
     "",
@@ -451,12 +433,8 @@ selects.forEach((selectEl, idx) => {
   "confirmNoAiUse",
   "confirmNoRedistribute",
   "confirmRevisionFee",
-<<<<<<< HEAD
-  "confirmEstimateNotFinal"
-=======
   "confirmEstimateNotFinal",
   "freeMemo"
->>>>>>> 5349785 (Update estimate form)
 ].forEach((id) => {
   const el = document.getElementById(id);
   el.addEventListener("input", updateAll);
