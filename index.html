@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>概算見積もりフォーム（試作品）</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>イラスト / Live2D 概算見積もりフォーム</h1>
+    <p class="note">表示金額はすべて<strong>概算</strong>です。</p>
+    <p class="warning">送信のみでは依頼確定になりません。内容確認後に正式なお見積もりをご案内します。</p>
+    <p class="note">このページでは概算算出のみ行います。正式な問い合わせ送信はGoogleフォームで行ってください。</p>
+
+    <section class="panel">
+      <h2>制作内容</h2>
+
+      <label for="requestLevel1">依頼カテゴリ</label>
+      <select id="requestLevel1"></select>
+
+      <div id="requestLevel2Row" class="hidden">
+        <label id="requestLevel2Label" for="requestLevel2">依頼内容</label>
+        <select id="requestLevel2"></select>
+      </div>
+
+      <div id="requestLevel3Row" class="hidden">
+        <label id="requestLevel3Label" for="requestLevel3">依頼詳細</label>
+        <select id="requestLevel3"></select>
+      </div>
+
+      <div id="requestLevel4Row" class="hidden">
+        <label id="requestLevel4Label" for="requestLevel4">追加詳細</label>
+        <select id="requestLevel4"></select>
+      </div>
+
+      <div id="requestLevel5Row" class="hidden">
+        <label id="requestLevel5Label" for="requestLevel5">最終詳細</label>
+        <select id="requestLevel5"></select>
+      </div>
+
+      <fieldset id="live2dChecksRow" class="hidden">
+        <legend>依頼内容（複数選択可）</legend>
+        <label><input id="live2dCharDesign" type="checkbox"> キャラデザ</label>
+        <label><input id="live2dPartsDraft" type="checkbox"> パーツ分け原画</label>
+        <label><input id="live2dModeling" type="checkbox"> モデリング</label>
+      </fieldset>
+
+      <div id="partsCountRow" class="hidden">
+        <label for="partsCountChoice">稼働レベル（パーツ数目安）</label>
+        <select id="partsCountChoice">
+          <option value="parts_30">簡易稼働（30パーツ以下）</option>
+          <option value="parts_50">中程度稼働（50パーツ以下）</option>
+          <option value="parts_100">高稼働（100パーツ以下）</option>
+          <option value="parts_over_100">超高稼働（100パーツ以上）</option>
+        </select>
+      </div>
+
+      <div id="diffRow" class="hidden">
+        <label for="diffCount">差分数</label>
+        <input id="diffCount" type="number" min="0" value="0">
+      </div>
+
+      <label for="usageType">使用用途</label>
+      <select id="usageType">
+        <option value="personal">個人鑑賞用</option>
+        <option value="video_streaming">動画、配信</option>
+        <option value="commercial">商用利用</option>
+      </select>
+
+      <fieldset>
+        <legend>追加条件</legend>
+        <label><input id="noPortfolio" type="checkbox"> 実績公開不可</label>
+        <label><input id="rushOrder" type="checkbox"> 短納期希望</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>確認項目（了承でチェック）</legend>
+        <label><input id="confirmNoAiUse" type="checkbox"> AI学習への利用は禁止です</label>
+        <label><input id="confirmNoRedistribute" type="checkbox"> 二次配布・改変は禁止です</label>
+        <label><input id="confirmRevisionFee" type="checkbox"> 過度な修正や制作後半での大幅修正は追加料金の可能性があります</label>
+        <label><input id="confirmEstimateNotFinal" type="checkbox"> 見積もりは確定ではありません</label>
+      </fieldset>
+    </section>
+
+    <section class="panel">
+      <h2>概算結果</h2>
+      <p class="estimate-label">概算見積もり</p>
+      <p id="estimateTotal" class="estimate-total">¥0</p>
+      <p id="estimateDelivery" class="note">概算納期: -</p>
+      <h3>内訳</h3>
+      <ul id="breakdownList"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>Googleフォームへ進む</h2>
+      <p>このページは概算のみです。正式な問い合わせ送信はGoogleフォームで行ってください。</p>
+      <textarea id="inquiryBody" rows="12" readonly></textarea>
+      <div class="button-row">
+        <button id="copyButton" type="button">コピー</button>
+        <span id="copyStatus" aria-live="polite"></span>
+      </div>
+      <div class="form-link-block">
+        <p>連絡先情報（名前・メール等）と自由記述欄は、Googleフォーム側で入力してください。</p>
+        <p>内容が固まったら、下のボタンからGoogleフォームへ進んで送信してください。</p>
+        <a id="googleFormLink" class="form-link-button" href="#" target="_blank" rel="noopener noreferrer">Googleフォームを開く</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

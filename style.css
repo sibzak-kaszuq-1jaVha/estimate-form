@@ -1,0 +1,131 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  background: #f7f8fc;
+  color: #1f2430;
+}
+
+.container {
+  max-width: 920px;
+  margin: 24px auto;
+  padding: 0 16px 24px;
+}
+
+h1 {
+  margin-bottom: 8px;
+}
+
+.note,
+.warning {
+  margin: 4px 0;
+}
+
+.warning {
+  color: #9b1c1c;
+  font-weight: 600;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #d9dfeb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+label,
+legend {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+select,
+input,
+textarea,
+button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border: 1px solid #bcc6d8;
+  border-radius: 6px;
+  font-size: 15px;
+  background: #fff;
+}
+
+fieldset {
+  margin-top: 14px;
+  border: 1px solid #d9dfeb;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+fieldset label {
+  font-weight: 500;
+}
+
+fieldset input[type="checkbox"] {
+  width: auto;
+  margin-right: 6px;
+}
+
+.estimate-label {
+  margin-bottom: 0;
+  font-weight: 700;
+}
+
+.estimate-total {
+  margin-top: 4px;
+  margin-bottom: 12px;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+#breakdownList {
+  padding-left: 18px;
+}
+
+.button-row {
+  margin-top: 10px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+#copyButton {
+  width: auto;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+#copyStatus {
+  font-size: 14px;
+  color: #365f1e;
+}
+
+.form-link-block {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid #e3e8f2;
+}
+
+.form-link-button {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 9px 14px;
+  border: 1px solid #2d4ea1;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fff;
+  background: #2d4ea1;
+  font-weight: 600;
+}
+
+.hidden {
+  display: none;
+}
