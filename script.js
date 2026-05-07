@@ -110,14 +110,8 @@ const REQUEST_TREE = [
     label: "ループアニメーション",
     children: [
       { key: "loop_waiting", label: "待機画面" },
-      {
-        key: "loop_asset",
-        label: "アセット",
-        children: [
-          { key: "loop_asset_mic", label: "マイク", showLoopDiff: true },
-          { key: "loop_asset_other", label: "その他アクセサリーなど", showLoopDiff: true }
-        ]
-      }
+      { key: "loop_asset_mic", label: "マイクアセット", showLoopDiff: true },
+      { key: "loop_asset_other", label: "その他 アクセサリー等アセット", showLoopDiff: true }
     ]
   }
 ];
