@@ -1,0 +1,44 @@
+{
+  "base": {
+    "bg_illust": { "price": 30000, "weeks": 4 },
+    "standing": { "price": 15000, "weeks": 4 },
+    "live2d_model": { "price": 40000, "weeks": 8 },
+    "loop_animation": { "price": 15000, "weeks": 4 }
+  },
+  "usageType": {
+    "personal": 1,
+    "video_streaming": 1.3,
+    "commercial": 1.5
+  },
+  "multipliers": {
+    "render_bg": { "price": 1.3, "weeks": 1.3 },
+    "render_char": { "price": 1, "weeks": 1 },
+    "size_bust": { "price": 0.8, "weeks": 0.8 },
+    "size_full": { "price": 1, "weeks": 1 },
+    "standing_keyvisual": { "price": 1, "weeks": 1 },
+    "standing_char_design": { "price": 1, "weeks": 1 },
+    "standing_char_new": { "price": 1.2, "weeks": 1.2 },
+    "standing_char_diff": { "price": 1, "weeks": 1 },
+    "three_yes": { "price": 1.5, "weeks": 1.5 },
+    "three_no": { "price": 1, "weeks": 1 },
+    "live2d_char_design": { "price": 1.1, "weeks": 1.1 },
+    "live2d_parts_draft": { "price": 1, "weeks": 1 },
+    "live2d_modeling": { "price": 2, "weeks": 2 },
+    "parts_30": { "price": 1, "weeks": 1 },
+    "parts_50": { "price": 1.5, "weeks": 1.5 },
+    "parts_100": { "price": 2, "weeks": 2 },
+    "parts_over_100": { "price": 2.5, "weeks": 2.5 },
+    "loop_waiting": { "price": 1.3, "weeks": 1.3 },
+    "loop_asset": { "price": 1, "weeks": 1 },
+    "loop_asset_mic": { "price": 1, "weeks": 1 },
+    "loop_asset_other": { "price": 1, "weeks": 1 }
+  },
+  "additions": {
+    "live2dDiffEach": { "price": 2000, "weeks": 1 },
+    "loopDiffEach": { "price": 2000, "weeks": 1 }
+  },
+  "options": {
+    "noPortfolio": { "price": 1.3, "weeks": 1.3 },
+    "rushOrder": { "price": 1.3, "weeks": 0.7 }
+  }
+}

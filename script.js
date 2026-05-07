@@ -1,4 +1,4 @@
-const PRICE_TABLE = {
+const DEFAULT_PRICE_TABLE = {
   base: {
     bg_illust: { price: 30000, weeks: 4 },
     standing: { price: 15000, weeks: 4 },
@@ -42,6 +42,9 @@ const PRICE_TABLE = {
     rushOrder: { price: 1.3, weeks: 0.7 }
   }
 };
+
+let PRICE_TABLE = DEFAULT_PRICE_TABLE;
+const PRICES_JSON_URL = "./prices.json";
 
 const GOOGLE_FORM_URL = "https://forms.gle/Uaienez6aJw63dor7";
 
@@ -451,10 +454,27 @@ copyButton.addEventListener("click", async () => {
   }
 });
 
-googleFormLink.href = GOOGLE_FORM_URL;
-fillSelect(selects[0], REQUEST_TREE, "選択してください");
-hideFrom(0);
-live2dChecksRow.classList.add("hidden");
-partsCountRow.classList.add("hidden");
-diffRow.classList.add("hidden");
-updateAll();
+async function loadPriceTable() {
+  try {
+    const response = await fetch(PRICES_JSON_URL, { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    PRICE_TABLE = data;
+  } catch (error) {
+    console.warn("prices.json の読み込みに失敗したため、既定の料金表を使います。", error);
+    PRICE_TABLE = DEFAULT_PRICE_TABLE;
+  }
+}
+
+async function init() {
+  await loadPriceTable();
+  googleFormLink.href = GOOGLE_FORM_URL;
+  fillSelect(selects[0], REQUEST_TREE, "選択してください");
+  hideFrom(0);
+  live2dChecksRow.classList.add("hidden");
+  partsCountRow.classList.add("hidden");
+  diffRow.classList.add("hidden");
+  updateAll();
+}
+
+init();
