@@ -39,3 +39,39 @@
    例: `script.js` を `script_backup.js` として保存
 2. 問題が出たら、バックアップファイルの内容を元に戻す
 3. どこを変更したか分からなくなった場合は、`PRICE_TABLE` だけ先に元の値へ戻して確認する
+
+---
+
+## 公開して使う手順（GitHub Pages）
+
+このプロジェクトは `HTML/CSS/JavaScript` だけで動くため、GitHub Pages でそのまま公開できます。
+
+### 1回だけ必要な設定
+
+1. GitHubでリポジトリ `estimate-form` を開く
+2. `Settings` → `Pages` を開く
+3. `Source` を **GitHub Actions** に変更して保存
+
+これで公開準備は完了です。
+
+### 以後の自動更新
+
+- `main` ブランチに更新を反映すると、GitHub Actions が自動で公開ページを更新します。
+- 追加した設定ファイル: `.github/workflows/deploy-pages.yml`
+
+### 公開URL
+
+- `https://sibzak-kaszuq-1jaVha.github.io/estimate-form/`
+
+※ 現在このURLは `404` だったため、まだ公開設定前です。上の「1回だけ必要な設定」を行うと表示されるようになります。
+
+### ローカルでの使用（公開前でも可）
+
+1. `index.html` をブラウザで開く
+2. 項目を選ぶと概算金額が表示される
+3. 「コピー」ボタンで問い合わせ本文をコピーできる
+
+### 戻し方（失敗時）
+
+- 追加した自動公開を止めたい場合: `.github/workflows/deploy-pages.yml` を無効化（リネーム）または削除
+- README追記を戻したい場合: Gitの履歴から `README.md` を以前の状態に戻す
