@@ -92,6 +92,22 @@
     </section>
 
     <section class="panel">
+      <h2>お支払い方法</h2>
+      <label for="paymentMethod">ご希望のお支払い方法</label>
+      <select id="paymentMethod">
+        <option value="bank_transfer">銀行振込</option>
+        <option value="paypal">PayPal</option>
+        <option value="azukari">アズカリ</option>
+      </select>
+
+      <div id="paymentNoticeRow" class="hidden">
+        <p class="warning">銀行振込またはPayPalでお支払いの場合は、契約成立時に制作料金の50％を着手金としてお支払いいただきます。</p>
+        <p>完成品をご確認いただいた後、残額50％のお支払いをお願いいたします。<br>残額のお支払い確認後、透かしなしの最終データを納品いたします。</p>
+        <label><input id="confirmDepositPolicy" type="checkbox"> 確認した</label>
+      </div>
+    </section>
+
+    <section class="panel">
       <fieldset>
         <legend>確認項目（チェックして了承）</legend>
         <label><input id="confirmNoAiUse" type="checkbox"> AI学習への利用は禁止です</label>

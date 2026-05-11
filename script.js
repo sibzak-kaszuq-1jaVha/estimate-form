@@ -137,6 +137,9 @@ const requestLevel3Label = document.getElementById("requestLevel3Label");
 const requestLevel4Label = document.getElementById("requestLevel4Label");
 const requestLevel5Label = document.getElementById("requestLevel5Label");
 const freeMemo = document.getElementById("freeMemo");
+const paymentMethod = document.getElementById("paymentMethod");
+const paymentNoticeRow = document.getElementById("paymentNoticeRow");
+const confirmDepositPolicy = document.getElementById("confirmDepositPolicy");
 
 const LEVEL_LABELS_BY_CATEGORY = {
   bg_illust: ["描き込み重視", "サイズ、範囲", "追加詳細", "最終詳細"],
@@ -366,11 +369,14 @@ function getCheckedConfirmations() {
 }
 
 function allConfirmationsChecked() {
+  const needDepositCheck =
+    paymentMethod.value === "bank_transfer" || paymentMethod.value === "paypal";
   return (
     document.getElementById("confirmNoAiUse").checked &&
     document.getElementById("confirmNoRedistribute").checked &&
     document.getElementById("confirmRevisionFee").checked &&
-    document.getElementById("confirmEstimateNotFinal").checked
+    document.getElementById("confirmEstimateNotFinal").checked &&
+    (!needDepositCheck || confirmDepositPolicy.checked)
   );
 }
 
@@ -387,6 +393,10 @@ function updateAll() {
   updateLevelLabels();
   const estimate = buildEstimate();
   const confirmations = getCheckedConfirmations();
+  const needDepositCheck =
+    paymentMethod.value === "bank_transfer" || paymentMethod.value === "paypal";
+  paymentNoticeRow.classList.toggle("hidden", !needDepositCheck);
+  if (!needDepositCheck) confirmDepositPolicy.checked = false;
   const canOpenGoogleForm = allConfirmationsChecked();
   estimateTotal.textContent = yen(estimate.total);
   estimateDelivery.textContent = `概算納期: ${estimate.weeks ? weeksToLabel(estimate.weeks) : "-"}`;
@@ -400,6 +410,12 @@ function updateAll() {
     "",
     "【自由記述】",
     freeMemo.value.trim() || "なし",
+    "",
+    "【ご希望のお支払い方法】",
+    paymentMethod.selectedOptions[0]?.textContent || "未選択",
+    "",
+    "【着手金条件の確認】",
+    needDepositCheck ? (confirmDepositPolicy.checked ? "確認済み" : "未確認") : "対象外（アズカリ）",
     "",
     "【確認済み項目】",
     ...(confirmations.length ? confirmations.map((item) => `- ${item}`) : ["- なし"]),
@@ -424,6 +440,8 @@ selects.forEach((selectEl, idx) => {
   "live2dModeling",
   "partsCountChoice",
   "usageType",
+  "paymentMethod",
+  "confirmDepositPolicy",
   "diffCount",
   "noPortfolio",
   "rushOrder",
