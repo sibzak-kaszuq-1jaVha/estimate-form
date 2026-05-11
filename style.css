@@ -79,6 +79,13 @@ fieldset input[type="checkbox"] {
   margin-right: 6px;
 }
 
+#paymentNoticeRow label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
 .estimate-label {
   margin-bottom: 0;
   font-weight: 700;
