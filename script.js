@@ -31,14 +31,17 @@ const DEFAULT_PRICE_TABLE = {
     loop_waiting: { price: 1.3, weeks: 1.3 },
     loop_asset: { price: 1, weeks: 1 },
     loop_asset_mic: { price: 1, weeks: 1 },
-    loop_asset_other: { price: 1, weeks: 1 }
+    loop_asset_other: { price: 1, weeks: 1 },
+    loop_richness_low: { price: 0.8, weeks: 0.8 },
+    loop_richness_mid: { price: 1, weeks: 1 },
+    loop_richness_high: { price: 1.3, weeks: 1.3 }
   },
   additions: {
     live2dDiffEach: { price: 2000, weeks: 1 },
     loopDiffEach: { price: 2000, weeks: 1 }
   },
   options: {
-    noPortfolio: { price: 1.3, weeks: 1.3 },
+    noPortfolio: { price: 1.3, weeks: 1.0 },
     rushOrder: { price: 1.3, weeks: 0.7 }
   }
 };
@@ -123,6 +126,7 @@ const rows = rowIds.map((id) => document.getElementById(id));
 
 const live2dChecksRow = document.getElementById("live2dChecksRow");
 const partsCountRow = document.getElementById("partsCountRow");
+const loopRichnessRow = document.getElementById("loopRichnessRow");
 const diffRow = document.getElementById("diffRow");
 const estimateTotal = document.getElementById("estimateTotal");
 const estimateDelivery = document.getElementById("estimateDelivery");
@@ -241,7 +245,9 @@ function updateLevelLabels() {
 function updateSpecialRows(path) {
   const topKey = path[0]?.key || "";
   const isLive2D = topKey === "live2d_model";
+  const isLoopAnimation = topKey === "loop_animation";
   live2dChecksRow.classList.toggle("hidden", !isLive2D);
+  loopRichnessRow.classList.toggle("hidden", !isLoopAnimation);
 
   const anyLive2dChecked =
     document.getElementById("live2dCharDesign").checked ||
@@ -259,6 +265,9 @@ function updateSpecialRows(path) {
     document.getElementById("live2dPartsDraft").checked = false;
     document.getElementById("live2dModeling").checked = false;
     document.getElementById("partsCountChoice").value = "parts_30";
+  }
+  if (!isLoopAnimation) {
+    document.getElementById("loopRichness").value = "loop_richness_mid";
   }
   if (!showDiff) document.getElementById("diffCount").value = "0";
 }
@@ -331,6 +340,15 @@ function buildEstimate() {
   const usageMul = multiply({ price: PRICE_TABLE.usageType[usageType], weeks: 1 });
   price *= usageMul.price;
   addLine(lines, `使用用途: ${document.getElementById("usageType").selectedOptions[0].textContent}`, `料金×${usageMul.price}`);
+
+  if (!loopRichnessRow.classList.contains("hidden")) {
+    const richnessKey = document.getElementById("loopRichness").value;
+    const richnessRule = multiply(PRICE_TABLE.multipliers[richnessKey]);
+    const richnessLabel = document.getElementById("loopRichness").selectedOptions[0].textContent;
+    price *= richnessRule.price;
+    weeks *= richnessRule.weeks;
+    addLine(lines, `リッチさ: ${richnessLabel}`, `料金×${richnessRule.price} / 納期×${richnessRule.weeks}`);
+  }
 
   if (!diffRow.classList.contains("hidden")) {
     const diff = getInt("diffCount");
@@ -440,6 +458,7 @@ selects.forEach((selectEl, idx) => {
   "live2dModeling",
   "partsCountChoice",
   "usageType",
+  "loopRichness",
   "paymentMethod",
   "confirmDepositPolicy",
   "diffCount",

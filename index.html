@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>概算見積もりフォーム（試作品）</title>
-  <link rel="stylesheet" href="style.css?v=20260511-1">
+  <link rel="stylesheet" href="style.css?v=20260521-1">
 </head>
 <body>
   <main class="container">
@@ -56,17 +56,26 @@
         </select>
       </div>
 
-      <div id="diffRow" class="hidden">
-        <label for="diffCount">差分数</label>
-        <input id="diffCount" type="number" min="0" value="0">
-      </div>
-
       <label for="usageType">使用用途</label>
       <select id="usageType">
         <option value="personal">個人鑑賞用</option>
         <option value="video_streaming">動画、配信</option>
         <option value="commercial">商用利用</option>
       </select>
+
+      <div id="loopRichnessRow" class="hidden">
+        <label for="loopRichness">リッチさ</label>
+        <select id="loopRichness">
+          <option value="loop_richness_low">低稼働（1~2箇所）</option>
+          <option value="loop_richness_mid">中稼働（3~5箇所）</option>
+          <option value="loop_richness_high">高稼働（6箇所以上）</option>
+        </select>
+      </div>
+
+      <div id="diffRow" class="hidden">
+        <label for="diffCount">差分数</label>
+        <input id="diffCount" type="number" min="0" value="0">
+      </div>
 
       <fieldset>
         <legend>追加条件</legend>
@@ -134,6 +143,6 @@
     </section>
   </main>
 
-  <script src="script.js?v=20260511-1"></script>
+  <script src="script.js?v=20260521-1"></script>
 </body>
 </html>
