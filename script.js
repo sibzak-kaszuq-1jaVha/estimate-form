@@ -433,7 +433,7 @@ function updateAll() {
     paymentMethod.selectedOptions[0]?.textContent || "未選択",
     "",
     "【着手金条件の確認】",
-    needDepositCheck ? (confirmDepositPolicy.checked ? "確認済み" : "未確認") : "対象外（アズカリ）",
+    needDepositCheck ? (confirmDepositPolicy.checked ? "確認済み" : "未確認") : "対象外（アズカリ・つなぐ）",
     "",
     "【確認済み項目】",
     ...(confirmations.length ? confirmations.map((item) => `- ${item}`) : ["- なし"]),
