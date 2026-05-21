@@ -149,7 +149,7 @@ const LEVEL_LABELS_BY_CATEGORY = {
   bg_illust: ["描き込み重視", "サイズ、範囲", "追加詳細", "最終詳細"],
   standing: ["依頼内容", "目的", "三面図要否", "最終詳細"],
   live2d_model: ["依頼内容", "可動域", "差分数", "最終詳細"],
-  loop_animation: ["用途", "欲しい物", "差分数", "最終詳細"]
+  loop_animation: ["欲しい物", "欲しい物", "差分数", "最終詳細"]
 };
 
 function yen(v) {
