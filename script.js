@@ -1,9 +1,9 @@
 const DEFAULT_PRICE_TABLE = {
   base: {
-    bg_illust: { price: 30000, weeks: 4 },
-    standing: { price: 15000, weeks: 4 },
+    bg_illust: { price: 30000, weeks: 6 },
+    standing: { price: 18000, weeks: 4 },
     live2d_model: { price: 40000, weeks: 8 },
-    loop_animation: { price: 15000, weeks: 4 }
+    loop_animation: { price: 18000, weeks: 4 }
   },
   usageType: { personal: 1, video_streaming: 1.3, commercial: 1.5 },
   multipliers: {
