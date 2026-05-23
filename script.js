@@ -37,7 +37,7 @@ const DEFAULT_PRICE_TABLE = {
     loop_richness_high: { price: 1.3, weeks: 1.3 }
   },
   additions: {
-    live2dDiffEach: { price: 2000, weeks: 1 },
+    live2dDiffEach: { price: 3000, weeks: 1 },
     loopDiffEach: { price: 2000, weeks: 1 }
   },
   options: {
