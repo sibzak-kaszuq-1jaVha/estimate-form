@@ -30,6 +30,15 @@ h1 {
   font-weight: 600;
 }
 
+.limited-banner {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid #f0b429;
+  border-radius: 6px;
+  background: #fff8e8;
+  color: #7a4e00;
+}
+
 .panel {
   background: #fff;
   border: 1px solid #d9dfeb;

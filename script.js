@@ -50,6 +50,11 @@ let PRICE_TABLE = DEFAULT_PRICE_TABLE;
 const PRICES_JSON_URL = "./prices.json";
 
 const GOOGLE_FORM_URL = "https://forms.gle/Uaienez6aJw63dor7";
+const LIVE2D_CAMPAIGN = {
+  enabled: true,
+  priceMultiplier: 0.4,
+  hideHighLevelOptions: true
+};
 
 const REQUEST_TREE = [
   {
@@ -136,6 +141,8 @@ const copyButton = document.getElementById("copyButton");
 const copyStatus = document.getElementById("copyStatus");
 const googleFormLink = document.getElementById("googleFormLink");
 const confirmWarning = document.getElementById("confirmWarning");
+const live2dLimitedBanner = document.getElementById("live2dLimitedBanner");
+const live2dLimitedNote = document.getElementById("live2dLimitedNote");
 const requestLevel2Label = document.getElementById("requestLevel2Label");
 const requestLevel3Label = document.getElementById("requestLevel3Label");
 const requestLevel4Label = document.getElementById("requestLevel4Label");
@@ -144,6 +151,7 @@ const freeMemo = document.getElementById("freeMemo");
 const paymentMethod = document.getElementById("paymentMethod");
 const paymentNoticeRow = document.getElementById("paymentNoticeRow");
 const confirmDepositPolicy = document.getElementById("confirmDepositPolicy");
+const partsCountChoice = document.getElementById("partsCountChoice");
 
 const LEVEL_LABELS_BY_CATEGORY = {
   bg_illust: ["描き込み重視", "サイズ、範囲", "追加詳細", "最終詳細"],
@@ -247,6 +255,7 @@ function updateSpecialRows(path) {
   const isLive2D = topKey === "live2d_model";
   const isLoopAnimation = topKey === "loop_animation";
   live2dChecksRow.classList.toggle("hidden", !isLive2D);
+  live2dLimitedBanner.classList.toggle("hidden", !(isLive2D && LIVE2D_CAMPAIGN.enabled));
   loopRichnessRow.classList.toggle("hidden", !isLoopAnimation);
 
   const anyLive2dChecked =
@@ -374,6 +383,11 @@ function buildEstimate() {
     addLine(lines, "追加条件: 短納期希望", `料金×${r.price} / 納期×${r.weeks}`);
   }
 
+  if (topKey === "live2d_model" && LIVE2D_CAMPAIGN.enabled) {
+    price *= LIVE2D_CAMPAIGN.priceMultiplier;
+    addLine(lines, "特別価格", `料金×${LIVE2D_CAMPAIGN.priceMultiplier}（60%OFF）`);
+  }
+
   return { total: price, weeks, lines };
 }
 
@@ -410,6 +424,7 @@ function renderBreakdown(lines) {
 function updateAll() {
   updateLevelLabels();
   const estimate = buildEstimate();
+  const isLive2D = selects[0].value === "live2d_model";
   const confirmations = getCheckedConfirmations();
   const needDepositCheck =
     paymentMethod.value === "bank_transfer" || paymentMethod.value === "paypal";
@@ -419,6 +434,7 @@ function updateAll() {
   estimateTotal.textContent = yen(estimate.total);
   estimateDelivery.textContent = `概算納期: ${estimate.weeks ? weeksToLabel(estimate.weeks) : "-"}`;
   renderBreakdown(estimate.lines);
+  live2dLimitedNote.classList.toggle("hidden", !(isLive2D && LIVE2D_CAMPAIGN.enabled));
   googleFormLink.classList.toggle("hidden", !canOpenGoogleForm);
   confirmWarning.classList.toggle("hidden", canOpenGoogleForm);
   inquiryBody.value = [
@@ -505,6 +521,12 @@ async function init() {
   live2dChecksRow.classList.add("hidden");
   partsCountRow.classList.add("hidden");
   diffRow.classList.add("hidden");
+  if (LIVE2D_CAMPAIGN.hideHighLevelOptions) {
+    ["parts_100", "parts_over_100"].forEach((value) => {
+      const option = partsCountChoice.querySelector(`option[value="${value}"]`);
+      if (option) option.remove();
+    });
+  }
   updateAll();
 }
 
