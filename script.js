@@ -179,8 +179,8 @@ const partsCountChoice = document.getElementById("partsCountChoice");
 const LEVEL_LABELS_BY_CATEGORY = {
   bg_illust: ["描き込み重視", "サイズ、範囲", "追加詳細", "最終詳細"],
   standing: ["依頼内容", "目的", "三面図要否", "最終詳細"],
-  live2d_model: ["依頼内容", "可動域", "差分数", "最終詳細"],
-  loop_animation: ["欲しい物", "欲しい物", "差分数", "最終詳細"]
+  live2d_model: ["依頼内容", "目的", "差分数", "最終詳細"],
+  loop_animation: ["依頼内容", "目的", "差分数", "最終詳細"]
 };
 const DEFAULT_SELECTIONS_BY_CATEGORY = {
   bg_illust: ["render_char", "size_full"],
@@ -338,8 +338,6 @@ function multiply(rule) {
   return rule || { price: 1, weeks: 1 };
 }
 
-const LEVEL_NAMES = ["依頼カテゴリ", "依頼内容", "目的", "三面図要否", "詳細"];
-
 function buildEstimate() {
   const path = getPath();
   updateSpecialRows(path);
@@ -353,16 +351,16 @@ function buildEstimate() {
   let price = base.price;
   let weeks = base.weeks;
   const lines = [];
-  addLine(lines, `基本料金（${path[0].label}）`, yen(base.price));
-  addLine(lines, `基本納期（${path[0].label}）`, weeksToLabel(base.weeks));
+  const levelLabels = LEVEL_LABELS_BY_CATEGORY[topKey] || ["依頼内容", "依頼詳細", "追加詳細", "最終詳細"];
+  addLine(lines, "依頼カテゴリ", path[0].label);
 
   path.forEach((node, index) => {
     if (index === 0) return;
     const rule = multiply(PRICE_TABLE.multipliers[node.key]);
     price *= rule.price;
     weeks *= rule.weeks;
-    const levelName = LEVEL_NAMES[index] || `階層${index + 1}`;
-    addLine(lines, `${levelName}: ${node.label}`, `料金×${rule.price} / 納期×${rule.weeks}`);
+    const levelName = levelLabels[index - 1] || `階層${index + 1}`;
+    addLine(lines, levelName, `${node.label}（料金×${rule.price} / 納期×${rule.weeks}）`);
   });
 
   if (!live2dChecksRow.classList.contains("hidden")) {
@@ -390,14 +388,14 @@ function buildEstimate() {
       const pLabel = document.getElementById("partsCountChoice").selectedOptions[0].textContent;
       price *= pRule.price;
       weeks *= pRule.weeks;
-      addLine(lines, `目的: ${pLabel}`, `料金×${pRule.price} / 納期×${pRule.weeks}`);
+      addLine(lines, "目的", `稼働レベル: ${pLabel}（料金×${pRule.price} / 納期×${pRule.weeks}）`);
     }
   }
 
   const usageType = document.getElementById("usageType").value;
   const usageMul = multiply({ price: PRICE_TABLE.usageType[usageType], weeks: 1 });
   price *= usageMul.price;
-  addLine(lines, `使用用途: ${document.getElementById("usageType").selectedOptions[0].textContent}`, `料金×${usageMul.price}`);
+  addLine(lines, "使用用途", `${document.getElementById("usageType").selectedOptions[0].textContent}（料金×${usageMul.price}）`);
 
   if (!loopRichnessRow.classList.contains("hidden")) {
     const richnessKey = document.getElementById("loopRichness").value;
@@ -423,13 +421,13 @@ function buildEstimate() {
     const r = multiply(PRICE_TABLE.options.noPortfolio);
     price *= r.price;
     weeks *= r.weeks;
-    addLine(lines, "追加条件: 実績公開不可", `料金×${r.price} / 納期×${r.weeks}`);
+    addLine(lines, "追加条件", `実績公開不可（料金×${r.price} / 納期×${r.weeks}）`);
   }
   if (document.getElementById("rushOrder").checked) {
     const r = multiply(PRICE_TABLE.options.rushOrder);
     price *= r.price;
     weeks *= r.weeks;
-    addLine(lines, "追加条件: 短納期希望", `料金×${r.price} / 納期×${r.weeks}`);
+    addLine(lines, "追加条件", `短納期希望（料金×${r.price} / 納期×${r.weeks}）`);
   }
 
   if (topKey === "live2d_model" && LIVE2D_CAMPAIGN.enabled) {
