@@ -206,12 +206,8 @@ function weeksToLabel(weeks) {
   return `${rest}週間`;
 }
 
-function fillSelect(selectEl, nodes, placeholder) {
+function fillSelect(selectEl, nodes) {
   selectEl.textContent = "";
-  const first = document.createElement("option");
-  first.value = "";
-  first.textContent = placeholder;
-  selectEl.appendChild(first);
   nodes.forEach((node) => {
     const op = document.createElement("option");
     op.value = node.key;
@@ -241,7 +237,7 @@ function getPath() {
 function hideFrom(rowStartIndex) {
   for (let i = rowStartIndex; i < rows.length; i += 1) {
     rows[i].classList.add("hidden");
-    fillSelect(selects[i + 1], [], "先に上の項目を選んでください");
+    fillSelect(selects[i + 1], []);
   }
 }
 
@@ -264,7 +260,7 @@ function refreshHierarchyFrom(changedSelectIndex) {
     if (!nodes.length) break;
     const rowIndex = level - 1;
     rows[rowIndex].classList.remove("hidden");
-    fillSelect(selects[level], nodes, "選択してください");
+    fillSelect(selects[level], nodes);
     if (!selects[level].value) break;
   }
 }
@@ -570,7 +566,7 @@ async function loadPriceTable() {
 async function init() {
   await loadPriceTable();
   googleFormLink.href = GOOGLE_FORM_URL;
-  fillSelect(selects[0], REQUEST_TREE, "選択してください");
+  fillSelect(selects[0], REQUEST_TREE);
   hideFrom(0);
   live2dChecksRow.classList.add("hidden");
   partsCountRow.classList.add("hidden");
