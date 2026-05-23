@@ -55,6 +55,8 @@ const LIVE2D_CAMPAIGN = {
   priceMultiplier: 0.4,
   hideHighLevelOptions: true
 };
+const LIVE2D_DEFAULT_ALL_CHECKED = true;
+let live2dDefaultApplied = false;
 
 const REQUEST_TREE = [
   {
@@ -257,6 +259,13 @@ function updateSpecialRows(path) {
   live2dChecksRow.classList.toggle("hidden", !isLive2D);
   live2dLimitedBanner.classList.toggle("hidden", !(isLive2D && LIVE2D_CAMPAIGN.enabled));
   loopRichnessRow.classList.toggle("hidden", !isLoopAnimation);
+
+  if (isLive2D && LIVE2D_DEFAULT_ALL_CHECKED && !live2dDefaultApplied) {
+    document.getElementById("live2dCharDesign").checked = true;
+    document.getElementById("live2dPartsDraft").checked = true;
+    document.getElementById("live2dModeling").checked = true;
+    live2dDefaultApplied = true;
+  }
 
   const anyLive2dChecked =
     document.getElementById("live2dCharDesign").checked ||
