@@ -93,16 +93,16 @@ const REQUEST_TREE = [
             key: "standing_char_new",
             label: "新規デザイン",
             children: [
-              { key: "three_yes", label: "3面図要: 必要" },
-              { key: "three_no", label: "3面図要: 不要" }
+              { key: "three_yes", label: "必要" },
+              { key: "three_no", label: "不要" }
             ]
           },
           {
             key: "standing_char_diff",
             label: "差分（新衣装など）",
             children: [
-              { key: "three_yes", label: "3面図要: 必要" },
-              { key: "three_no", label: "3面図要: 不要" }
+              { key: "three_yes", label: "必要" },
+              { key: "three_no", label: "不要" }
             ]
           }
         ]
@@ -115,16 +115,16 @@ const REQUEST_TREE = [
             key: "standing_char_new",
             label: "新規デザイン",
             children: [
-              { key: "three_yes", label: "3面図要: 必要" },
-              { key: "three_no", label: "3面図要: 不要" }
+              { key: "three_yes", label: "必要" },
+              { key: "three_no", label: "不要" }
             ]
           },
           {
             key: "standing_char_diff",
             label: "差分（新衣装など）",
             children: [
-              { key: "three_yes", label: "3面図要: 必要" },
-              { key: "three_no", label: "3面図要: 不要" }
+              { key: "three_yes", label: "必要" },
+              { key: "three_no", label: "不要" }
             ]
           }
         ]
