@@ -85,7 +85,28 @@ const REQUEST_TREE = [
     key: "standing",
     label: "立ち絵",
     children: [
-      { key: "standing_keyvisual", label: "Vtuber向けキービジュアル" },
+      {
+        key: "standing_keyvisual",
+        label: "Vtuber向けキービジュアル",
+        children: [
+          {
+            key: "standing_char_new",
+            label: "新規デザイン",
+            children: [
+              { key: "three_yes", label: "3面図要: 必要" },
+              { key: "three_no", label: "3面図要: 不要" }
+            ]
+          },
+          {
+            key: "standing_char_diff",
+            label: "差分（新衣装など）",
+            children: [
+              { key: "three_yes", label: "3面図要: 必要" },
+              { key: "three_no", label: "3面図要: 不要" }
+            ]
+          }
+        ]
+      },
       {
         key: "standing_char_design",
         label: "キャラデザ",
@@ -160,6 +181,11 @@ const LEVEL_LABELS_BY_CATEGORY = {
   standing: ["依頼内容", "目的", "三面図要否", "最終詳細"],
   live2d_model: ["依頼内容", "可動域", "差分数", "最終詳細"],
   loop_animation: ["欲しい物", "欲しい物", "差分数", "最終詳細"]
+};
+const DEFAULT_SELECTIONS_BY_CATEGORY = {
+  bg_illust: ["render_char", "size_full"],
+  standing: ["standing_keyvisual", "standing_char_new", "three_no"],
+  loop_animation: ["loop_asset_mic"]
 };
 
 function yen(v) {
@@ -240,6 +266,23 @@ function refreshHierarchyFrom(changedSelectIndex) {
     rows[rowIndex].classList.remove("hidden");
     fillSelect(selects[level], nodes, "選択してください");
     if (!selects[level].value) break;
+  }
+}
+
+function applyCategoryDefaults() {
+  const topKey = selects[0].value;
+  const defaults = DEFAULT_SELECTIONS_BY_CATEGORY[topKey];
+  if (!defaults || !defaults.length) return;
+  for (let i = 0; i < defaults.length; i += 1) {
+    const levelIndex = i + 1;
+    const selectEl = selects[levelIndex];
+    const rowEl = rows[levelIndex - 1];
+    if (!selectEl || (rowEl && rowEl.classList.contains("hidden"))) break;
+    const targetValue = defaults[i];
+    const hasTarget = Array.from(selectEl.options).some((option) => option.value === targetValue);
+    if (!hasTarget) break;
+    selectEl.value = targetValue;
+    refreshHierarchyFrom(levelIndex);
   }
 }
 
@@ -474,6 +517,7 @@ function updateAll() {
 selects.forEach((selectEl, idx) => {
   selectEl.addEventListener("change", () => {
     refreshHierarchyFrom(idx);
+    if (idx === 0) applyCategoryDefaults();
     updateAll();
   });
 });
