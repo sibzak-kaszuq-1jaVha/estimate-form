@@ -56,7 +56,7 @@ const LIVE2D_CAMPAIGN = {
   hideHighLevelOptions: true
 };
 const LIVE2D_DEFAULT_ALL_CHECKED = true;
-let live2dDefaultApplied = false;
+let lastTopCategoryKey = "";
 
 const REQUEST_TREE = [
   {
@@ -256,15 +256,15 @@ function updateSpecialRows(path) {
   const topKey = path[0]?.key || "";
   const isLive2D = topKey === "live2d_model";
   const isLoopAnimation = topKey === "loop_animation";
+  const enteredLive2D = isLive2D && lastTopCategoryKey !== "live2d_model";
   live2dChecksRow.classList.toggle("hidden", !isLive2D);
   live2dLimitedBanner.classList.toggle("hidden", !(isLive2D && LIVE2D_CAMPAIGN.enabled));
   loopRichnessRow.classList.toggle("hidden", !isLoopAnimation);
 
-  if (isLive2D && LIVE2D_DEFAULT_ALL_CHECKED && !live2dDefaultApplied) {
+  if (enteredLive2D && LIVE2D_DEFAULT_ALL_CHECKED) {
     document.getElementById("live2dCharDesign").checked = true;
     document.getElementById("live2dPartsDraft").checked = true;
     document.getElementById("live2dModeling").checked = true;
-    live2dDefaultApplied = true;
   }
 
   const anyLive2dChecked =
@@ -288,6 +288,7 @@ function updateSpecialRows(path) {
     document.getElementById("loopRichness").value = "loop_richness_mid";
   }
   if (!showDiff) document.getElementById("diffCount").value = "0";
+  lastTopCategoryKey = topKey;
 }
 
 function addLine(lines, label, value) {
