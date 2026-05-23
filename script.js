@@ -565,7 +565,8 @@ async function init() {
   await loadPriceTable();
   googleFormLink.href = GOOGLE_FORM_URL;
   fillSelect(selects[0], REQUEST_TREE);
-  hideFrom(0);
+  refreshHierarchyFrom(0);
+  applyCategoryDefaults();
   live2dChecksRow.classList.add("hidden");
   partsCountRow.classList.add("hidden");
   diffRow.classList.add("hidden");
