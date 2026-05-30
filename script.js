@@ -569,6 +569,7 @@ async function init() {
   }
   refreshHierarchyFrom(0);
   applyCategoryDefaults();
+  document.getElementById("loopRichness").value = "loop_richness_mid";
   live2dChecksRow.classList.add("hidden");
   partsCountRow.classList.add("hidden");
   diffRow.classList.add("hidden");
