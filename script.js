@@ -29,7 +29,6 @@ const DEFAULT_PRICE_TABLE = {
     parts_over_100: { price: 2.5, weeks: 2.5 },
     // ループアニメーション
     loop_waiting: { price: 1.3, weeks: 1.3 },
-    loop_asset: { price: 1, weeks: 1 },
     loop_asset_mic: { price: 1, weeks: 1 },
     loop_asset_other: { price: 1, weeks: 1 },
     loop_richness_low: { price: 0.8, weeks: 0.8 },
@@ -56,6 +55,7 @@ const LIVE2D_CAMPAIGN = {
   hideHighLevelOptions: true
 };
 const LIVE2D_DEFAULT_ALL_CHECKED = true;
+const DEFAULT_TOP_CATEGORY_KEY = "loop_animation";
 let lastTopCategoryKey = "";
 
 const REQUEST_TREE = [
@@ -133,8 +133,7 @@ const REQUEST_TREE = [
   },
   {
     key: "live2d_model",
-    label: "Live2Dモデル",
-    live2dFlow: true
+    label: "Live2Dモデル"
   },
   {
     key: "loop_animation",
@@ -565,6 +564,9 @@ async function init() {
   await loadPriceTable();
   googleFormLink.href = GOOGLE_FORM_URL;
   fillSelect(selects[0], REQUEST_TREE);
+  if (REQUEST_TREE.some((node) => node.key === DEFAULT_TOP_CATEGORY_KEY)) {
+    selects[0].value = DEFAULT_TOP_CATEGORY_KEY;
+  }
   refreshHierarchyFrom(0);
   applyCategoryDefaults();
   live2dChecksRow.classList.add("hidden");

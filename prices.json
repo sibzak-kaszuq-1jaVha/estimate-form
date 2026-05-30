@@ -29,7 +29,6 @@
     "parts_100": { "price": 2, "weeks": 2 },
     "parts_over_100": { "price": 2.5, "weeks": 2.5 },
     "loop_waiting": { "price": 1.3, "weeks": 1.3 },
-    "loop_asset": { "price": 1, "weeks": 1 },
     "loop_asset_mic": { "price": 1, "weeks": 1 },
     "loop_asset_other": { "price": 1, "weeks": 1 },
     "loop_richness_low": { "price": 0.8, "weeks": 0.8 },
