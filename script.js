@@ -1,6 +1,6 @@
 const DEFAULT_PRICE_TABLE = {
   base: {
-    bg_illust: { price: 30000, weeks: 6 },
+    bg_illust: { price: 30000, weeks: 4 },
     standing: { price: 18000, weeks: 4 },
     live2d_model: { price: 40000, weeks: 8 },
     loop_animation: { price: 18000, weeks: 4 }
@@ -8,7 +8,7 @@ const DEFAULT_PRICE_TABLE = {
   usageType: { personal: 1, video_streaming: 1.3, commercial: 1.5 },
   multipliers: {
     // 背景あり1枚絵
-    render_bg: { price: 1.3, weeks: 1.3 },
+    render_bg: { price: 1.7, weeks: 1.7 },
     render_char: { price: 1, weeks: 1 },
     size_bust: { price: 0.8, weeks: 0.8 },
     size_full: { price: 1, weeks: 1 },
@@ -165,6 +165,7 @@ const googleFormLink = document.getElementById("googleFormLink");
 const confirmWarning = document.getElementById("confirmWarning");
 const live2dLimitedBanner = document.getElementById("live2dLimitedBanner");
 const live2dLimitedNote = document.getElementById("live2dLimitedNote");
+const bgIllustReference = document.getElementById("bgIllustReference");
 const requestLevel2Label = document.getElementById("requestLevel2Label");
 const requestLevel3Label = document.getElementById("requestLevel3Label");
 const requestLevel4Label = document.getElementById("requestLevel4Label");
@@ -295,6 +296,7 @@ function updateSpecialRows(path) {
   const isLive2D = topKey === "live2d_model";
   const isLoopAnimation = topKey === "loop_animation";
   const enteredLive2D = isLive2D && lastTopCategoryKey !== "live2d_model";
+  bgIllustReference.classList.toggle("hidden", topKey !== "bg_illust");
   live2dChecksRow.classList.toggle("hidden", !isLive2D);
   live2dLimitedBanner.classList.toggle("hidden", !(isLive2D && LIVE2D_CAMPAIGN.enabled));
   loopRichnessRow.classList.toggle("hidden", !isLoopAnimation);
