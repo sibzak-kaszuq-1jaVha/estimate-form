@@ -33,7 +33,9 @@ const DEFAULT_PRICE_TABLE = {
     loop_asset_other: { price: 1, weeks: 1 },
     loop_richness_low: { price: 0.8, weeks: 0.8 },
     loop_richness_mid: { price: 1, weeks: 1 },
-    loop_richness_high: { price: 1.3, weeks: 1.3 }
+    loop_richness_high: { price: 1.3, weeks: 1.3 },
+    loop_tracking_yes: { price: 1.5, weeks: 1.2 },
+    loop_tracking_no: { price: 1, weeks: 1 }
   },
   additions: {
     live2dDiffEach: { price: 3000, weeks: 1 },
@@ -154,6 +156,7 @@ const rows = rowIds.map((id) => document.getElementById(id));
 const live2dChecksRow = document.getElementById("live2dChecksRow");
 const partsCountRow = document.getElementById("partsCountRow");
 const loopRichnessRow = document.getElementById("loopRichnessRow");
+const loopTrackingRow = document.getElementById("loopTrackingRow");
 const diffRow = document.getElementById("diffRow");
 const estimateTotal = document.getElementById("estimateTotal");
 const estimateDelivery = document.getElementById("estimateDelivery");
@@ -300,6 +303,7 @@ function updateSpecialRows(path) {
   live2dChecksRow.classList.toggle("hidden", !isLive2D);
   live2dLimitedBanner.classList.toggle("hidden", !(isLive2D && LIVE2D_CAMPAIGN.enabled));
   loopRichnessRow.classList.toggle("hidden", !isLoopAnimation);
+  loopTrackingRow.classList.toggle("hidden", !isLoopAnimation);
 
   if (enteredLive2D && LIVE2D_DEFAULT_ALL_CHECKED) {
     document.getElementById("live2dCharDesign").checked = true;
@@ -326,6 +330,7 @@ function updateSpecialRows(path) {
   }
   if (!isLoopAnimation) {
     document.getElementById("loopRichness").value = "loop_richness_mid";
+    document.getElementById("loopTracking").value = "loop_tracking_no";
   }
   if (!showDiff) document.getElementById("diffCount").value = "0";
   lastTopCategoryKey = topKey;
@@ -405,6 +410,15 @@ function buildEstimate() {
     price *= richnessRule.price;
     weeks *= richnessRule.weeks;
     addLine(lines, `リッチさ: ${richnessLabel}`, `料金×${richnessRule.price} / 納期×${richnessRule.weeks}`);
+  }
+
+  if (!loopTrackingRow.classList.contains("hidden")) {
+    const trackingKey = document.getElementById("loopTracking").value;
+    const trackingRule = multiply(PRICE_TABLE.multipliers[trackingKey]);
+    const trackingLabel = document.getElementById("loopTracking").selectedOptions[0].textContent;
+    price *= trackingRule.price;
+    weeks *= trackingRule.weeks;
+    addLine(lines, `Live2Dトラッキング: ${trackingLabel}`, `料金×${trackingRule.price} / 納期×${trackingRule.weeks}`);
   }
 
   if (!diffRow.classList.contains("hidden")) {
@@ -524,6 +538,7 @@ selects.forEach((selectEl, idx) => {
   "partsCountChoice",
   "usageType",
   "loopRichness",
+  "loopTracking",
   "paymentMethod",
   "confirmDepositPolicy",
   "diffCount",
@@ -572,6 +587,7 @@ async function init() {
   refreshHierarchyFrom(0);
   applyCategoryDefaults();
   document.getElementById("loopRichness").value = "loop_richness_mid";
+  document.getElementById("loopTracking").value = "loop_tracking_no";
   live2dChecksRow.classList.add("hidden");
   partsCountRow.classList.add("hidden");
   diffRow.classList.add("hidden");
