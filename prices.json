@@ -1,6 +1,6 @@
 {
   "base": {
-    "bg_illust": { "price": 30000, "weeks": 4 },
+    "bg_illust": { "price": 35000, "weeks": 4 },
     "standing": { "price": 18000, "weeks": 4 },
     "live2d_model": { "price": 40000, "weeks": 8 },
     "loop_animation": { "price": 18000, "weeks": 4 }

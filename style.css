@@ -46,7 +46,9 @@ h1 {
 .reference-image-block img {
   display: block;
   width: 100%;
+  max-width: 520px;
   height: auto;
+  margin: 0 auto;
   border: 1px solid #d9dfeb;
   border-radius: 6px;
 }
