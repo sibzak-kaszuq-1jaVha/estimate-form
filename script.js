@@ -398,11 +398,6 @@ function buildEstimate() {
     }
   }
 
-  const usageType = document.getElementById("usageType").value;
-  const usageMul = multiply({ price: PRICE_TABLE.usageType[usageType], weeks: 1 });
-  price *= usageMul.price;
-  addLine(lines, "使用用途", `${document.getElementById("usageType").selectedOptions[0].textContent}（料金×${usageMul.price}）`);
-
   if (!loopRichnessRow.classList.contains("hidden")) {
     const richnessKey = document.getElementById("loopRichness").value;
     const richnessRule = multiply(PRICE_TABLE.multipliers[richnessKey]);
@@ -431,6 +426,11 @@ function buildEstimate() {
       addLine(lines, `差分数 ${diff}`, `料金+${yen(add.price)}×${diff} / 納期+${add.weeks}週間×${diff}`);
     }
   }
+
+  const usageType = document.getElementById("usageType").value;
+  const usageMul = multiply({ price: PRICE_TABLE.usageType[usageType], weeks: 1 });
+  price *= usageMul.price;
+  addLine(lines, "使用用途", `${document.getElementById("usageType").selectedOptions[0].textContent}（料金×${usageMul.price}）`);
 
   if (document.getElementById("noPortfolio").checked) {
     const r = multiply(PRICE_TABLE.options.noPortfolio);
