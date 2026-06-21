@@ -1,7 +1,7 @@
 const DEFAULT_PRICE_TABLE = {
   base: {
     bg_illust: { price: 35000, weeks: 4 },
-    standing: { price: 18000, weeks: 4 },
+    standing: { price: 20000, weeks: 4 },
     live2d_model: { price: 40000, weeks: 8 },
     loop_animation: { price: 20000, weeks: 4 }
   },
@@ -20,7 +20,7 @@ const DEFAULT_PRICE_TABLE = {
     three_yes: { price: 1.5, weeks: 1.5 },
     three_no: { price: 1, weeks: 1 },
     // Live2Dモデル
-    live2d_char_design: { price: 1.1, weeks: 1.1 },
+    live2d_char_design: { price: 1.3, weeks: 1.3 },
     live2d_parts_draft: { price: 1, weeks: 1 },
     live2d_modeling: { price: 2, weeks: 2 },
     parts_30: { price: 1, weeks: 1 },
