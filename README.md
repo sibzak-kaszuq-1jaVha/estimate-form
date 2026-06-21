@@ -66,6 +66,89 @@ GitHub上で日付を変更する場合の手順です。
 `index.html` をFinderから直接開いた場合、ブラウザの制限で `schedule-config.json` が読み込まれず、日付が `-` になることがあります。<br>
 クライアントに見せる実際の表示は、GitHub Pagesの公開ページで確認してください。
 
+## ローカルで更新してGitHubへ反映する方法
+
+`schedule-config.json` と `prices.json` は、GitHub上で直接変更される可能性があります。<br>
+そのため、ローカルで編集する前に、まずGitHub側の最新版を取り込んでください。
+
+ここで使う `pull` は「GitHubの最新版をローカルに取り込む」操作です。<br>
+`push` は「ローカルの変更をGitHubへ送る」操作です。
+
+### 1. ローカルファイルを最新にする
+
+ターミナルで、このプロジェクトのフォルダへ移動します。
+
+```bash
+cd /Users/tanaka/Documents/Codex/estimate-form
+```
+
+次に、GitHub側の最新版を取り込みます。
+
+```bash
+git pull origin main
+```
+
+この操作を先に行うと、GitHub上で変更された `schedule-config.json` や `prices.json` と、ローカルの内容がずれにくくなります。
+
+### 2. ローカルでファイルを編集する
+
+日付を変える場合は、`schedule-config.json` の `startDate` だけを変更します。
+
+```json
+{
+  "startDate": "2026-08-01"
+}
+```
+
+料金を変える場合は、`prices.json` の `price` や `weeks` の数字だけを変更します。<br>
+項目名（例: `loop_animation`、`commercial` など）は、画面側のコードとつながっているため変更しないでください。
+
+### 3. 変更内容を確認する
+
+どのファイルを変更したか確認します。
+
+```bash
+git status
+```
+
+変更内容の詳細を確認します。
+
+```bash
+git diff
+```
+
+### 4. GitHubへpushする
+
+変更したファイルだけをGitに追加します。
+
+```bash
+git add schedule-config.json prices.json
+```
+
+変更内容に名前をつけて保存します。
+
+```bash
+git commit -m "Update schedule and prices"
+```
+
+GitHubへ送ります。
+
+```bash
+git push origin main
+```
+
+### 5. pushできない場合
+
+`fetch first` や `rejected` と表示された場合は、GitHub側に新しい変更があります。<br>
+その場合は、もう一度最新版を取り込んでからpushします。
+
+```bash
+git pull origin main
+git push origin main
+```
+
+もし `git pull` のあとに見慣れない表示が出た場合は、無理に進めず、どのファイルで止まっているか確認してください。
+
 ## GoogleフォームURLの設定
 
 `script.js` の `GOOGLE_FORM_URL` を、あなたのGoogleフォームURLに変更してください。  
