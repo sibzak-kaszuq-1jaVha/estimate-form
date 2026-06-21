@@ -49,6 +49,8 @@ const DEFAULT_PRICE_TABLE = {
 
 let PRICE_TABLE = DEFAULT_PRICE_TABLE;
 const PRICES_JSON_URL = "./prices.json";
+const SCHEDULE_CONFIG_URL = "./schedule-config.json";
+let scheduleConfig = { startDate: "" };
 
 const GOOGLE_FORM_URL = "https://forms.gle/Uaienez6aJw63dor7";
 const LIVE2D_CAMPAIGN = {
@@ -160,6 +162,8 @@ const loopTrackingRow = document.getElementById("loopTrackingRow");
 const diffRow = document.getElementById("diffRow");
 const estimateTotal = document.getElementById("estimateTotal");
 const estimateDelivery = document.getElementById("estimateDelivery");
+const estimateStartDate = document.getElementById("estimateStartDate");
+const estimateDueDate = document.getElementById("estimateDueDate");
 const breakdownList = document.getElementById("breakdownList");
 const inquiryBody = document.getElementById("inquiryBody");
 const copyButton = document.getElementById("copyButton");
@@ -207,6 +211,62 @@ function weeksToLabel(weeks) {
   if (months > 0 && rest > 0) return `${months}ヶ月 + ${rest}週間`;
   if (months > 0) return `${months}ヶ月`;
   return `${rest}週間`;
+}
+
+function parseDateInput(value) {
+  if (!value || typeof value !== "string") return null;
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return null;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(year, month - 1, day);
+  if (
+    date.getFullYear() !== year ||
+    date.getMonth() !== month - 1 ||
+    date.getDate() !== day
+  ) {
+    return null;
+  }
+  return date;
+}
+
+function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+function formatDateWithYear(date) {
+  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+}
+
+function formatDateWithoutYear(date) {
+  return `${date.getMonth() + 1}月${date.getDate()}日`;
+}
+
+function formatDateRange(startDate, endDate) {
+  const startLabel = formatDateWithYear(startDate);
+  const endLabel =
+    startDate.getFullYear() === endDate.getFullYear()
+      ? formatDateWithoutYear(endDate)
+      : formatDateWithYear(endDate);
+  return `${startLabel}~${endLabel}ごろ`;
+}
+
+function getScheduleRange(estimateWeeks) {
+  const startDate = parseDateInput(scheduleConfig.startDate);
+  if (!startDate) {
+    return { startLabel: "-", dueLabel: "-" };
+  }
+  const startRangeEnd = addDays(startDate, 6);
+  const deliveryDays = Math.max(1, Math.round(estimateWeeks || 0)) * 7;
+  const dueRangeStart = addDays(startDate, deliveryDays);
+  const dueRangeEnd = addDays(startRangeEnd, deliveryDays);
+  return {
+    startLabel: formatDateRange(startDate, startRangeEnd),
+    dueLabel: formatDateRange(dueRangeStart, dueRangeEnd)
+  };
 }
 
 function fillSelect(selectEl, nodes) {
@@ -493,8 +553,11 @@ function updateAll() {
   paymentNoticeRow.classList.toggle("hidden", !needDepositCheck);
   if (!needDepositCheck) confirmDepositPolicy.checked = false;
   const canOpenGoogleForm = allConfirmationsChecked();
+  const scheduleRange = getScheduleRange(estimate.weeks);
   estimateTotal.textContent = yen(estimate.total);
   estimateDelivery.textContent = `概算納期: ${estimate.weeks ? weeksToLabel(estimate.weeks) : "-"}`;
+  estimateStartDate.textContent = `着手予定日: ${scheduleRange.startLabel}`;
+  estimateDueDate.textContent = `納品予定日: ${scheduleRange.dueLabel}`;
   renderBreakdown(estimate.lines);
   live2dLimitedNote.classList.toggle("hidden", !(isLive2D && LIVE2D_CAMPAIGN.enabled));
   googleFormLink.classList.toggle("hidden", !canOpenGoogleForm);
@@ -518,7 +581,10 @@ function updateAll() {
     "",
     `概算合計: ${yen(estimate.total)}`,
     `概算納期: ${estimate.weeks ? weeksToLabel(estimate.weeks) : "-"}`,
+    `着手予定日: ${scheduleRange.startLabel}`,
+    `納品予定日: ${scheduleRange.dueLabel}`,
     "※ この金額は概算です。",
+    "※ 着手予定日・納品予定日は目安です。",
     "※ 送信のみでは依頼確定になりません。"
   ].join("\n");
 }
@@ -577,8 +643,23 @@ async function loadPriceTable() {
   }
 }
 
+async function loadScheduleConfig() {
+  try {
+    const response = await fetch(SCHEDULE_CONFIG_URL, { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    scheduleConfig = {
+      startDate: typeof data.startDate === "string" ? data.startDate : ""
+    };
+  } catch (error) {
+    console.warn("schedule-config.json の読み込みに失敗したため、日付表示を空にします。", error);
+    scheduleConfig = { startDate: "" };
+  }
+}
+
 async function init() {
   await loadPriceTable();
+  await loadScheduleConfig();
   googleFormLink.href = GOOGLE_FORM_URL;
   fillSelect(selects[0], REQUEST_TREE);
   if (REQUEST_TREE.some((node) => node.key === DEFAULT_TOP_CATEGORY_KEY)) {
