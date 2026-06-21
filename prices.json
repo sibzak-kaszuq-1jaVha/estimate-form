@@ -1,48 +1,63 @@
 {
+  "__memo": {
+    "about": "このファイルは概算見積もりの料金表です。JSON形式なので // や /* */ のコメントは書けません。説明は __memo に入れています。",
+    "price": "price は金額、または料金倍率です。35000 は 35,000円、1.5 は 1.5倍という意味です。",
+    "weeks": "weeks は概算納期です。4 は約4週間、1.5 は約1.5週間という意味です。",
+    "edit_rule": "基本的には price と weeks の数字だけを変更してください。項目名（bg_illust など）は画面側のコードとつながっているため、名前変更はしないでください。",
+    "estimate_note": "このフォームの金額と納期は確定ではなく概算として表示します。"
+  },
   "base": {
-    "bg_illust": { "price": 35000, "weeks": 4 },
-    "standing": { "price": 18000, "weeks": 4 },
-    "live2d_model": { "price": 40000, "weeks": 8 },
-    "loop_animation": { "price": 20000, "weeks": 4 }
+    "__memo": "依頼カテゴリごとの基本料金と基本納期です。最初にこの金額と納期を土台にして計算します。",
+    "bg_illust": { "price": 35000, "weeks": 4, "__memo": "背景あり1枚絵の基本料金と基本納期です。" },
+    "standing": { "price": 18000, "weeks": 4, "__memo": "立ち絵の基本料金と基本納期です。" },
+    "live2d_model": { "price": 40000, "weeks": 8, "__memo": "Live2Dモデル制作の基本料金と基本納期です。" },
+    "loop_animation": { "price": 20000, "weeks": 4, "__memo": "ループアニメーション素材の基本料金と基本納期です。" }
   },
   "usageType": {
+    "__memo": "使用用途ごとの料金倍率です。納期はここでは変えません。",
+    "__personal_memo": "個人鑑賞用。1 は料金を増減しないという意味です。",
     "personal": 1,
+    "__video_streaming_memo": "動画・配信用。1.3 は基本計算後の料金を1.3倍にします。",
     "video_streaming": 1.3,
+    "__commercial_memo": "商用利用。1.5 は基本計算後の料金を1.5倍にします。",
     "commercial": 1.5
   },
   "multipliers": {
-    "render_bg": { "price": 1.7, "weeks": 1.7 },
-    "render_char": { "price": 1, "weeks": 1 },
-    "size_bust": { "price": 0.8, "weeks": 0.8 },
-    "size_full": { "price": 1, "weeks": 1 },
-    "standing_keyvisual": { "price": 1, "weeks": 1 },
-    "standing_char_design": { "price": 1, "weeks": 1 },
-    "standing_char_new": { "price": 1.2, "weeks": 1.2 },
-    "standing_char_diff": { "price": 1, "weeks": 1 },
-    "three_yes": { "price": 1.5, "weeks": 1.5 },
-    "three_no": { "price": 1, "weeks": 1 },
-    "live2d_char_design": { "price": 1.1, "weeks": 1.1 },
-    "live2d_parts_draft": { "price": 1, "weeks": 1 },
-    "live2d_modeling": { "price": 2, "weeks": 2 },
-    "parts_30": { "price": 1, "weeks": 1 },
-    "parts_50": { "price": 1.5, "weeks": 1.5 },
-    "parts_100": { "price": 2, "weeks": 2 },
-    "parts_over_100": { "price": 2.5, "weeks": 2.5 },
-    "loop_waiting": { "price": 1.5, "weeks": 1.5 },
-    "loop_asset_mic": { "price": 1, "weeks": 1 },
-    "loop_asset_other": { "price": 1, "weeks": 1 },
-    "loop_richness_low": { "price": 0.8, "weeks": 0.8 },
-    "loop_richness_mid": { "price": 1, "weeks": 1 },
-    "loop_richness_high": { "price": 1.3, "weeks": 1.3 },
-    "loop_tracking_yes": { "price": 1.5, "weeks": 1.2 },
-    "loop_tracking_no": { "price": 1, "weeks": 1 }
+    "__memo": "カテゴリ内の選択肢ごとの倍率です。price は料金倍率、weeks は納期倍率です。1 は増減なし、1.5 は1.5倍、0.8 は0.8倍です。",
+    "render_bg": { "price": 1.7, "weeks": 1.7, "__memo": "背景あり1枚絵の「背景重視」。描き込み量が増える想定です。" },
+    "render_char": { "price": 1, "weeks": 1, "__memo": "背景あり1枚絵の「キャラ重視」。基本料金から増減しません。" },
+    "size_bust": { "price": 0.8, "weeks": 0.8, "__memo": "背景あり1枚絵の「バストアップ」。全身より範囲が狭い想定です。" },
+    "size_full": { "price": 1, "weeks": 1, "__memo": "背景あり1枚絵の「全身」。基本料金から増減しません。" },
+    "standing_keyvisual": { "price": 1, "weeks": 1, "__memo": "立ち絵の「Vtuber向けキービジュアル」。基本料金から増減しません。" },
+    "standing_char_design": { "price": 1, "weeks": 1, "__memo": "立ち絵の「キャラデザ」。基本料金から増減しません。" },
+    "standing_char_new": { "price": 1.2, "weeks": 1.2, "__memo": "立ち絵の「新規デザイン」。既存デザインより作業量が増える想定です。" },
+    "standing_char_diff": { "price": 1, "weeks": 1, "__memo": "立ち絵の「差分（新衣装など）」。基本料金から増減しません。" },
+    "three_yes": { "price": 1.5, "weeks": 1.5, "__memo": "立ち絵の「三面図が必要」。三面図制作分を上乗せします。" },
+    "three_no": { "price": 1, "weeks": 1, "__memo": "立ち絵の「三面図が不要」。基本料金から増減しません。" },
+    "live2d_char_design": { "price": 1.1, "weeks": 1.1, "__memo": "Live2Dの「キャラデザ」。チェックされた場合に上乗せします。" },
+    "live2d_parts_draft": { "price": 1, "weeks": 1, "__memo": "Live2Dの「パーツ分け原画」。基本料金から増減しません。" },
+    "live2d_modeling": { "price": 2, "weeks": 2, "__memo": "Live2Dの「モデリング」。料金と納期を2倍にします。" },
+    "parts_30": { "price": 1, "weeks": 1, "__memo": "Live2Dの「簡易稼働（30パーツ以下）」。基本料金から増減しません。" },
+    "parts_50": { "price": 1.5, "weeks": 1.5, "__memo": "Live2Dの「中程度稼働（50パーツ以下）」。作業量が増える想定です。" },
+    "parts_100": { "price": 2, "weeks": 2, "__memo": "Live2Dの「高稼働（100パーツ以下）」。料金と納期を2倍にします。" },
+    "parts_over_100": { "price": 2.5, "weeks": 2.5, "__memo": "Live2Dの「超高稼働（100パーツ以上）」。料金と納期を2.5倍にします。" },
+    "loop_waiting": { "price": 1.5, "weeks": 1.5, "__memo": "ループアニメーションの「待機画面」。基本料金より作業量が多い想定です。" },
+    "loop_asset_mic": { "price": 1, "weeks": 1, "__memo": "ループアニメーションの「マイクアセット」。基本料金から増減しません。" },
+    "loop_asset_other": { "price": 1, "weeks": 1, "__memo": "ループアニメーションの「その他アクセサリー等アセット」。基本料金から増減しません。" },
+    "loop_richness_low": { "price": 0.8, "weeks": 0.8, "__memo": "ループアニメーションの「低稼働（1~2箇所）」。作業量が少なめの想定です。" },
+    "loop_richness_mid": { "price": 1, "weeks": 1, "__memo": "ループアニメーションの「中稼働（3~5箇所）」。基本料金から増減しません。" },
+    "loop_richness_high": { "price": 1.3, "weeks": 1.3, "__memo": "ループアニメーションの「高稼働（6箇所以上）」。作業量が増える想定です。" },
+    "loop_tracking_yes": { "price": 1.5, "weeks": 1.2, "__memo": "ループアニメーションの「Live2Dトラッキングあり」。料金を1.5倍、納期を1.2倍にします。" },
+    "loop_tracking_no": { "price": 1, "weeks": 1, "__memo": "ループアニメーションの「Live2Dトラッキングなし」。基本料金から増減しません。" }
   },
   "additions": {
-    "live2dDiffEach": { "price": 3000, "weeks": 1 },
-    "loopDiffEach": { "price": 3000, "weeks": 1 }
+    "__memo": "差分数など、1つ増えるごとに足し算する料金です。multipliers と違い、倍率ではなく固定金額を加算します。",
+    "live2dDiffEach": { "price": 3000, "weeks": 1, "__memo": "Live2Dの差分1つごとの追加料金と追加納期です。" },
+    "loopDiffEach": { "price": 3000, "weeks": 1, "__memo": "ループアニメーションの差分1つごとの追加料金と追加納期です。" }
   },
   "options": {
-    "noPortfolio": { "price": 1.3, "weeks": 1.0 },
-    "rushOrder": { "price": 1.3, "weeks": 0.7 }
+    "__memo": "追加条件の倍率です。チェックされた場合だけ計算に入ります。",
+    "noPortfolio": { "price": 1.3, "weeks": 1.0, "__memo": "実績公開不可。料金を1.3倍にし、納期は変えません。" },
+    "rushOrder": { "price": 1.3, "weeks": 0.7, "__memo": "短納期希望。料金を1.3倍にし、納期を0.7倍にします。" }
   }
 }
