@@ -1,53 +1,5 @@
-const DEFAULT_PRICE_TABLE = {
-  base: {
-    bg_illust: { price: 35000, weeks: 4 },
-    standing: { price: 20000, weeks: 4 },
-    live2d_model: { price: 40000, weeks: 8 },
-    loop_animation: { price: 20000, weeks: 4 }
-  },
-  usageType: { personal: 1, video_streaming: 1.3, commercial: 1.5 },
-  multipliers: {
-    // 背景あり1枚絵
-    render_bg: { price: 1.7, weeks: 1.7 },
-    render_char: { price: 1, weeks: 1 },
-    size_bust: { price: 0.8, weeks: 0.8 },
-    size_full: { price: 1, weeks: 1 },
-    // 立ち絵
-    standing_keyvisual: { price: 1, weeks: 1 },
-    standing_char_design: { price: 1, weeks: 1 },
-    standing_char_new: { price: 1.2, weeks: 1.2 },
-    standing_char_diff: { price: 1, weeks: 1 },
-    three_yes: { price: 1.5, weeks: 1.5 },
-    three_no: { price: 1, weeks: 1 },
-    // Live2Dモデル
-    live2d_char_design: { price: 1.3, weeks: 1.3 },
-    live2d_parts_draft: { price: 1, weeks: 1 },
-    live2d_modeling: { price: 2, weeks: 2 },
-    parts_30: { price: 1, weeks: 1 },
-    parts_50: { price: 1.5, weeks: 1.5 },
-    parts_100: { price: 2, weeks: 2 },
-    parts_over_100: { price: 2.5, weeks: 2.5 },
-    // ループアニメーション
-    loop_waiting: { price: 1.5, weeks: 1.5 },
-    loop_asset_mic: { price: 1, weeks: 1 },
-    loop_asset_other: { price: 1, weeks: 1 },
-    loop_richness_low: { price: 0.8, weeks: 0.8 },
-    loop_richness_mid: { price: 1, weeks: 1 },
-    loop_richness_high: { price: 1.3, weeks: 1.3 },
-    loop_tracking_yes: { price: 1.5, weeks: 1.2 },
-    loop_tracking_no: { price: 1, weeks: 1 }
-  },
-  additions: {
-    live2dDiffEach: { price: 3000, weeks: 1 },
-    loopDiffEach: { price: 3000, weeks: 1 }
-  },
-  options: {
-    noPortfolio: { price: 1.3, weeks: 1.0 },
-    rushOrder: { price: 1.3, weeks: 0.7 }
-  }
-};
-
-let PRICE_TABLE = DEFAULT_PRICE_TABLE;
+let PRICE_TABLE = null;
+let priceTableLoadError = "";
 const PRICES_JSON_URL = "./prices.json";
 const SCHEDULE_CONFIG_URL = "./schedule-config.json";
 let scheduleConfig = { startDate: "" };
@@ -408,6 +360,15 @@ function buildEstimate() {
   const path = getPath();
   updateSpecialRows(path);
 
+  if (!PRICE_TABLE) {
+    return {
+      total: 0,
+      weeks: 0,
+      lines: [{ label: "料金表", value: priceTableLoadError || "prices.jsonを読み込めません" }],
+      hasPriceTable: false
+    };
+  }
+
   const topKey = path[0]?.key;
   const base = PRICE_TABLE.base[topKey];
   if (!base) {
@@ -510,7 +471,7 @@ function buildEstimate() {
     addLine(lines, "特別価格", `料金×${LIVE2D_CAMPAIGN.priceMultiplier}（60%OFF）`);
   }
 
-  return { total: price, weeks, lines };
+  return { total: price, weeks, lines, hasPriceTable: true };
 }
 
 function getCheckedConfirmations() {
@@ -552,9 +513,9 @@ function updateAll() {
     paymentMethod.value === "bank_transfer" || paymentMethod.value === "paypal";
   paymentNoticeRow.classList.toggle("hidden", !needDepositCheck);
   if (!needDepositCheck) confirmDepositPolicy.checked = false;
-  const canOpenGoogleForm = allConfirmationsChecked();
+  const canOpenGoogleForm = estimate.hasPriceTable !== false && allConfirmationsChecked();
   const scheduleRange = getScheduleRange(estimate.weeks);
-  estimateTotal.textContent = yen(estimate.total);
+  estimateTotal.textContent = estimate.hasPriceTable === false ? "料金表を読み込めません" : yen(estimate.total);
   estimateDelivery.textContent = `概算納期: ${estimate.weeks ? weeksToLabel(estimate.weeks) : "-"}`;
   estimateStartDate.textContent = `着手予定日: ${scheduleRange.startLabel}`;
   estimateDueDate.textContent = `納品予定日: ${scheduleRange.dueLabel}`;
@@ -579,7 +540,7 @@ function updateAll() {
     "【確認済み項目】",
     ...(confirmations.length ? confirmations.map((item) => `- ${item}`) : ["- なし"]),
     "",
-    `概算合計: ${yen(estimate.total)}`,
+    `概算合計: ${estimate.hasPriceTable === false ? "料金表を読み込めません" : yen(estimate.total)}`,
     `概算納期: ${estimate.weeks ? weeksToLabel(estimate.weeks) : "-"}`,
     `着手予定日: ${scheduleRange.startLabel}`,
     `納品予定日: ${scheduleRange.dueLabel}`,
@@ -636,10 +597,15 @@ async function loadPriceTable() {
     const response = await fetch(PRICES_JSON_URL, { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
+    if (!data.base || !data.usageType || !data.multipliers || !data.additions || !data.options) {
+      throw new Error("prices.json の必要な項目が足りません");
+    }
     PRICE_TABLE = data;
+    priceTableLoadError = "";
   } catch (error) {
-    console.warn("prices.json の読み込みに失敗したため、既定の料金表を使います。", error);
-    PRICE_TABLE = DEFAULT_PRICE_TABLE;
+    console.warn("prices.json の読み込みに失敗しました。", error);
+    PRICE_TABLE = null;
+    priceTableLoadError = "prices.jsonを読み込めません。公開ページ、またはローカルサーバーで確認してください。";
   }
 }
 
