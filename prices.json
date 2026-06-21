@@ -9,7 +9,7 @@
   "base": {
     "__memo": "依頼カテゴリごとの基本料金と基本納期です。最初にこの金額と納期を土台にして計算します。",
     "bg_illust": { "price": 35000, "weeks": 4, "__memo": "背景あり1枚絵の基本料金と基本納期です。" },
-    "standing": { "price": 18000, "weeks": 4, "__memo": "立ち絵の基本料金と基本納期です。" },
+    "standing": { "price": 20000, "weeks": 4, "__memo": "立ち絵の基本料金と基本納期です。" },
     "live2d_model": { "price": 40000, "weeks": 8, "__memo": "Live2Dモデル制作の基本料金と基本納期です。" },
     "loop_animation": { "price": 20000, "weeks": 4, "__memo": "ループアニメーション素材の基本料金と基本納期です。" }
   },
@@ -34,7 +34,7 @@
     "standing_char_diff": { "price": 1, "weeks": 1, "__memo": "立ち絵の「差分（新衣装など）」。基本料金から増減しません。" },
     "three_yes": { "price": 1.5, "weeks": 1.5, "__memo": "立ち絵の「三面図が必要」。三面図制作分を上乗せします。" },
     "three_no": { "price": 1, "weeks": 1, "__memo": "立ち絵の「三面図が不要」。基本料金から増減しません。" },
-    "live2d_char_design": { "price": 1.1, "weeks": 1.1, "__memo": "Live2Dの「キャラデザ」。チェックされた場合に上乗せします。" },
+    "live2d_char_design": { "price": 1.3, "weeks": 1.3, "__memo": "Live2Dの「キャラデザ」。チェックされた場合に上乗せします。" },
     "live2d_parts_draft": { "price": 1, "weeks": 1, "__memo": "Live2Dの「パーツ分け原画」。基本料金から増減しません。" },
     "live2d_modeling": { "price": 2, "weeks": 2, "__memo": "Live2Dの「モデリング」。料金と納期を2倍にします。" },
     "parts_30": { "price": 1, "weeks": 1, "__memo": "Live2Dの「簡易稼働（30パーツ以下）」。基本料金から増減しません。" },
