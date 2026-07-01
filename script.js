@@ -478,6 +478,7 @@ function getCheckedConfirmations() {
   const items = [];
   if (document.getElementById("confirmNoAiUse").checked) items.push("AI学習への利用は禁止です");
   if (document.getElementById("confirmNoRedistribute").checked) items.push("二次配布・改変は禁止です");
+  if (document.getElementById("confirmAllAgesUse").checked) items.push("成人向け・R18・NSFW・性的表現を主目的とする用途には使用しません");
   if (document.getElementById("confirmRevisionFee").checked) items.push("過度な修正や制作後半での大幅修正は追加料金の可能性があります");
   if (document.getElementById("confirmEstimateNotFinal").checked) items.push("見積もりは確定ではありません");
   return items;
@@ -489,6 +490,7 @@ function allConfirmationsChecked() {
   return (
     document.getElementById("confirmNoAiUse").checked &&
     document.getElementById("confirmNoRedistribute").checked &&
+    document.getElementById("confirmAllAgesUse").checked &&
     document.getElementById("confirmRevisionFee").checked &&
     document.getElementById("confirmEstimateNotFinal").checked &&
     (!needDepositCheck || confirmDepositPolicy.checked)
@@ -573,6 +575,7 @@ selects.forEach((selectEl, idx) => {
   "rushOrder",
   "confirmNoAiUse",
   "confirmNoRedistribute",
+  "confirmAllAgesUse",
   "confirmRevisionFee",
   "confirmEstimateNotFinal",
   "freeMemo"

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>料金目安チェック</title>
-  <link rel="stylesheet" href="style.css?v=20260621-1">
+  <link rel="stylesheet" href="style.css?v=20260702-1">
 </head>
 <body>
   <main class="container">
@@ -124,6 +124,23 @@
     </section>
 
     <section class="panel">
+      <h2>ご依頼内容・使用用途について</h2>
+      <div class="usage-policy-note">
+        <p>当方では、全年齢向けのイラスト・アセット制作を中心に承っております。</p>
+        <p>以下に該当するご依頼、または以下の用途での使用を前提としたご依頼はお受けできません。</p>
+        <ul>
+          <li>成人向け、R18、NSFW、性的表現を主目的とする作品への使用</li>
+          <li>性的サービス、成人向け販売物、成人向け配信・投稿への使用</li>
+          <li>納品物を性的な文脈で加工・改変・掲載すること</li>
+          <li>第三者への再配布、無断転載、自作発言</li>
+          <li>その他、当方の活動方針と合わないと判断した内容</li>
+        </ul>
+        <p>ご依頼者様の活動内容に成人向け要素が含まれる場合でも、今回の制作物の用途が全年齢向けであり、使用範囲が明確な場合は、内容を確認のうえ個別に判断いたします。</p>
+        <p>見積もり送信後であっても、内容確認の結果、制作をお断りする場合があります。</p>
+      </div>
+    </section>
+
+    <section class="panel">
       <h2>お支払い方法</h2>
       <label for="paymentMethod">ご希望のお支払い方法</label>
       <select id="paymentMethod">
@@ -145,6 +162,7 @@
         <legend>確認項目（チェックして了承）</legend>
         <label><input id="confirmNoAiUse" type="checkbox"> AI学習への利用は禁止です</label>
         <label><input id="confirmNoRedistribute" type="checkbox"> 二次配布・改変は禁止です</label>
+        <label><input id="confirmAllAgesUse" type="checkbox"> 成人向け・R18・NSFW・性的表現を主目的とする用途には使用しません</label>
         <label><input id="confirmRevisionFee" type="checkbox"> 過度な修正や制作後半での大幅修正は追加料金の可能性があります</label>
         <label><input id="confirmEstimateNotFinal" type="checkbox"> 見積もりは確定ではありません</label>
       </fieldset>
@@ -167,6 +185,6 @@
     </section>
   </main>
 
-  <script src="script.js?v=20260621-4"></script>
+  <script src="script.js?v=20260702-1"></script>
 </body>
 </html>

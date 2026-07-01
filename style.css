@@ -61,6 +61,26 @@ h1 {
   margin-top: 16px;
 }
 
+.usage-policy-note {
+  padding: 12px 14px;
+  border: 1px solid #d9dfeb;
+  border-radius: 6px;
+  background: #f7f8fc;
+}
+
+.usage-policy-note p {
+  margin: 0 0 10px;
+}
+
+.usage-policy-note p:last-child {
+  margin-bottom: 0;
+}
+
+.usage-policy-note ul {
+  margin: 0 0 10px;
+  padding-left: 22px;
+}
+
 label,
 legend {
   display: block;
