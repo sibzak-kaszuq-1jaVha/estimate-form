@@ -9,9 +9,9 @@
   "base": {
     "__memo": "依頼カテゴリごとの基本料金と基本納期です。最初にこの金額と納期を土台にして計算します。",
     "bg_illust": { "price": 35000, "weeks": 4, "__memo": "背景あり1枚絵の基本料金と基本納期です。" },
-    "standing": { "price": 20000, "weeks": 4, "__memo": "立ち絵の基本料金と基本納期です。" },
-    "live2d_model": { "price": 40000, "weeks": 8, "__memo": "Live2Dモデル制作の基本料金と基本納期です。" },
-    "loop_animation": { "price": 20000, "weeks": 4, "__memo": "ループアニメーション素材の基本料金と基本納期です。" }
+    "standing": { "price": 20000, "weeks": 3, "__memo": "立ち絵の基本料金と基本納期です。" },
+    "live2d_model": { "price": 40000, "weeks": 4, "__memo": "Live2Dモデル制作の基本料金と基本納期です。" },
+    "loop_animation": { "price": 20000, "weeks": 3, "__memo": "ループアニメーション素材の基本料金と基本納期です。" }
   },
   "usageType": {
     "__memo": "使用用途ごとの料金倍率です。納期はここでは変えません。",
