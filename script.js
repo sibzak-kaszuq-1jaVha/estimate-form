@@ -189,6 +189,22 @@ function addDays(date, days) {
   return result;
 }
 
+function getEffectiveStartDate(configuredStartDate, today = new Date()) {
+  if (!configuredStartDate) return null;
+
+  const todayAtMidnight = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+
+  if (configuredStartDate < todayAtMidnight) {
+    return addDays(todayAtMidnight, 1);
+  }
+
+  return configuredStartDate;
+}
+
 function formatDateWithYear(date) {
   return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
 }
@@ -207,7 +223,8 @@ function formatDateRange(startDate, endDate) {
 }
 
 function getScheduleRange(estimateWeeks) {
-  const startDate = parseDateInput(scheduleConfig.startDate);
+  const configuredStartDate = parseDateInput(scheduleConfig.startDate);
+  const startDate = getEffectiveStartDate(configuredStartDate);
   if (!startDate) {
     return { startLabel: "-", dueLabel: "-" };
   }
